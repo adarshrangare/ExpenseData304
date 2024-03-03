@@ -53,7 +53,7 @@ img{
     filter:opacity(.4)
 }
 
-.input{
+.input {
     margin: 10px;
     min-width: 60%;
     display: flex;
@@ -61,7 +61,7 @@ img{
     gap: 10px;
 
 }
-input{
+input, select{
     width: 100%;
     height: 40px;
     font: roboto;
@@ -130,7 +130,9 @@ ul{
     align-items: center;
     gap: 10px;
     /* font-size: medium; */
-
+    height: fit-content;
+    max-height: 50dvh;
+    overflow-y: auto;
 }
 
 ul div{
@@ -161,4 +163,30 @@ li{
 #errormessage{
     color: red;
     font-size: 20px;
+}
+
+.details{
+    margin-top: 10px;
+    background: rgba(0, 0, 0,0.2);
+    padding:  10px;
+}
+
+.details{
+    width: 90%;
+    /* display: flex; */
+    text-align: center;
+
+}   
+
+.hisab{
+    width: 100%;
+    display: flex;
+    margin-top: 20px;
+}
+
+.hisab li{
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    
 }

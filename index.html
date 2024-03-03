@@ -51,9 +51,16 @@
     </defs>
 <path fill="url(#sw-gradient)" d="M23,-27.3C30.6,-21,38.2,-14.5,39.3,-7.1C40.4,0.3,34.9,8.6,30,17.6C25.2,26.6,21,36.3,13.3,41C5.7,45.7,-5.4,45.5,-13.2,40.7C-21,35.9,-25.5,26.6,-28.2,18.1C-30.8,9.6,-31.7,1.9,-30.5,-5.4C-29.2,-12.8,-25.9,-19.9,-20.5,-26.6C-15.1,-33.3,-7.5,-39.5,0.1,-39.6C7.7,-39.7,15.3,-33.6,23,-27.3Z" width="100%" height="100%" transform="translate(50 50)" stroke-width="0" style="transition: all 0.3s ease 0s;"></path>
 </svg>
+    
     <div id="errormessage"></div>
     <div class="input">
-        <input type="text" placeholder="What is Your Name?" id="name"> 
+        <!-- <input type="text" placeholder="What is Your Name?" id="name">  -->
+        <select name="Name" id="name">
+            <option value="Adarsh">Adarsh</option>
+            <option value="Ankit">Ankit</option>
+            <option value="Manav">Manav</option>
+            <option value="Vikas">Vikas</option>
+        </select>
         <input type="text" placeholder="What is Item?" id="item">
         <input type="number" placeholder="What is Item's Price?" id="price">
     </div>
@@ -69,6 +76,18 @@
 
         </ul>
 
+    </div>
+    <br>
+    <div class="details">
+        <h2>Expenses</h2>
+        <ul class="hisab">
+            <li><span id="totalAmount">Total</span> <span id="total">0</span></li>
+            <li><span id="adarshAmount">Adarsh</span> <span id="adarsh">0</span></li>
+            <li><span id="ankitAmount">Ankit</span> <span id="ankit">0</span></li>
+            <li><span id="manavAmount">Manav</span> <span id="manav">0</span></li>
+            <li><span id="vikasAmount">Vikas</span> <span id="vikas">0</span></li>
+            <li><span id="perPersonName">Per Person</span> <span id="perPerson">0</span></li>
+        </ul>
     </div>
 
 
