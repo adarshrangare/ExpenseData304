@@ -190,3 +190,25 @@ li{
     justify-content: space-between;
     
 }
+.hisab li span:first-child{
+    font-weight: 600;
+    
+}
+
+.hisab li span{
+    padding-left:  20px  ;
+    padding-right:  20px  ;
+}
+
+.hisab .perPerson{
+ background-color: rgba(254, 215, 170, 0.2);   
+ /* color: red; */
+ font-weight: 600;
+ font-size: large;
+}
+.hisab .total{
+ background-color: rgba(116, 198, 249, 0.2);   
+ font-weight: 600;
+ font-size: large;
+}
+
