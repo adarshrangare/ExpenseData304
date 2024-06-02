@@ -1,126 +1,112 @@
-
-import {initializeApp} from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
-import {getDatabase,ref, push, onValue } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
-
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  push,
+  onValue,
+} from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
 
 const firebaseConfig = {
-    databaseURL : "https://expensedata-91ef6-default-rtdb.asia-southeast1.firebasedatabase.app/"
-
-}
+  databaseURL:
+    "https://expensedata-91ef6-default-rtdb.asia-southeast1.firebasedatabase.app/",
+};
 
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
-const itemListInDB = ref(database, "itemList","itemPrice");
-
+const itemListInDB = ref(database, "itemList", "itemPrice");
 
 // console.log(app);
-console.log({itemListInDB});
+console.log({ itemListInDB });
 
 const inputFieldItem = document.getElementById("item");
 const inputFieldPrice = document.getElementById("price");
 const inputfieldname = document.getElementById("name");
-const ItemTiles = document.getElementById("itemTiles")
+const ItemTiles = document.getElementById("itemTiles");
 const addButtonEl = document.getElementById("addButton");
 
+const total = document.getElementById("total");
+const adarsh = document.getElementById("adarsh");
+// const ankit = document.getElementById("ankit")
 
-const total = document.getElementById("total")
-const adarsh = document.getElementById("adarsh")
-const ankit = document.getElementById("ankit")
+const vikas = document.getElementById("vikas");
+const manav = document.getElementById("manav");
+const perPerson = document.getElementById("perPerson");
 
-const vikas = document.getElementById("vikas")
-const manav = document.getElementById("manav")
-const perPerson = document.getElementById("perPerson")
+addButtonEl.addEventListener("click", function () {
+  let binputItem = inputFieldItem.value;
+  let cinputPrice = inputFieldPrice.value;
+  let ainputName = inputfieldname.value;
 
+  if (ainputName == "") {
+    inputfieldname.classList.add("error");
+    document.getElementById("errormessage").innerHTML = "Enter the Valid Input";
+    return;
+  }
 
-addButtonEl.addEventListener("click",function(){
+  if (binputItem == "") {
+    inputFieldItem.classList.add("error");
+    document.getElementById("errormessage").innerHTML = "Enter the Valid Input";
+    return;
+  }
+  if (cinputPrice == "") {
+    inputFieldPrice.classList.add("error");
+    document.getElementById("errormessage").innerHTML = "Enter the Valid Input";
+    return;
+  }
 
-    let binputItem = inputFieldItem.value;
-    let cinputPrice = inputFieldPrice.value;
-    let ainputName = inputfieldname.value;
+  let newItem = {
+    ainputName,
+    binputItem,
+    cinputPrice,
+  };
 
-    if(ainputName=="" ){
-        inputfieldname.classList.add("error");
-        document.getElementById("errormessage").innerHTML = "Enter the Valid Input";
-        return;
-    }
+  push(itemListInDB, newItem);
 
-    if(binputItem=="" ){
-        inputFieldItem.classList.add("error");
-        document.getElementById("errormessage").innerHTML = "Enter the Valid Input";
-        return;
-    }
-    if(cinputPrice=="" ){
-        inputFieldPrice.classList.add("error");
-        document.getElementById("errormessage").innerHTML = "Enter the Valid Input";
-        return;
-    }
-    
-    let newItem = {
-         ainputName,
-         binputItem,
-         cinputPrice
-      };
-    
-    push(itemListInDB, newItem);
+  // console.log(inputPrice + inputItem);
 
-    
-    
-    // console.log(inputPrice + inputItem);
+  // ItemListUpdate(inputItem,inputPrice);
+  clearfield();
+});
+onValue(itemListInDB, function (snapshot) {
+  let itemsArray = Object.values(Object.values(snapshot.val()));
 
-    // ItemListUpdate(inputItem,inputPrice);
-    clearfield();
+  console.log({ itemsArray });
 
-})
-onValue(itemListInDB, function(snapshot){
-       
-    let itemsArray = Object.values(Object.values(snapshot.val()));
+  ItemTiles.innerHTML = "";
 
-    console.log({itemsArray});
+  for (let i = 0; i < itemsArray.length; i++) {
+    let Array = Object.values(itemsArray[i]);
+    ItemListUpdate(Array[0], Array[1], Array[2]);
+  }
 
-    ItemTiles.innerHTML = "";
-    
-    for(let i=0;i<itemsArray.length;i++){
-        let Array = Object.values(itemsArray[i]);
-        ItemListUpdate(Array[0],Array[1],Array[2]);
-    }
+  const result = calculteResult(itemsArray);
 
-    const result = calculteResult(itemsArray)
+  UpdateResult(result);
+});
 
-    UpdateResult(result)
-
-})
-
-
-function clearfield(){
-
-    inputFieldItem.value = "";
-    inputFieldPrice.value = "";
+function clearfield() {
+  inputFieldItem.value = "";
+  inputFieldPrice.value = "";
 }
 
-function ItemListUpdate(name,item,price){
-
-    ItemTiles.innerHTML +=`<div>
+function ItemListUpdate(name, item, price) {
+  ItemTiles.innerHTML += `<div>
     <li>${name}</li><li>${item}</li> <li>${price}</li>
-   </div> `
+   </div> `;
 }
 
-function UpdateResult(values){
-
-    console.log(values)
-    total.textContent = values.totalVal
-    adarsh.textContent = values.adarshVal
-    ankit.textContent = values.ankitVal
-    vikas.textContent = values.vikasVal
-    manav.textContent = values.manavVal
-    perPerson.textContent = values.perPerson
-    
+function UpdateResult(values) {
+  console.log(values);
+  total.textContent = values.totalVal;
+  adarsh.textContent = values.adarshVal;
+  // ankit.textContent = values.ankitVal;
+  vikas.textContent = values.vikasVal;
+  manav.textContent = values.manavVal;
+  perPerson.textContent = values.perPerson;
 }
 
-
-function calculteResult(data){
-
-
-    const manavVal = data
+function calculteResult(data) {
+  const manavVal = data
     .filter((item) => item.ainputName.trim().toLowerCase() == "manav")
     .reduce((acc, curr) => {
       return acc + curr.cinputPrice * 1;
@@ -130,30 +116,27 @@ function calculteResult(data){
     .reduce((acc, curr) => {
       return acc + curr.cinputPrice * 1;
     }, 0);
-  const ankitVal = data
-    .filter((item) => item.ainputName.trim().toLowerCase() == "ankit")
-    .reduce((acc, curr) => {
-      return acc + curr.cinputPrice * 1;
-    }, 0);
+  // const ankitVal = data
+  //   .filter((item) => item.ainputName.trim().toLowerCase() == "ankit")
+  //   .reduce((acc, curr) => {
+  //     return acc + curr.cinputPrice * 1;
+  //   }, 0);
   const vikasVal = data
     .filter((item) => item.ainputName.trim().toLowerCase() == "vikas")
     .reduce((acc, curr) => {
       return acc + curr.cinputPrice * 1;
     }, 0);
-  
-//   console.log({ resultManav });
-//   console.log({ resultVikas });
-//   console.log({ resultAnkit });
-//   console.log({ resultAdarsh });
-  
+
+  //   console.log({ resultManav });
+  //   console.log({ resultVikas });
+  //   console.log({ resultAnkit });
+  //   console.log({ resultAdarsh });
+
   const totalVal = data.reduce((acc, curr) => {
     return acc + curr.cinputPrice * 1;
   }, 0);
 
-  const perPerson = totalVal/4 ;
+  const perPerson = totalVal / 4;
 
-
-  return {adarshVal,manavVal,perPerson,vikasVal,ankitVal,totalVal}
-
-
+  return { adarshVal, manavVal, perPerson, vikasVal, totalVal };
 }
