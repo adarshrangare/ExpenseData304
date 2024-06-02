@@ -136,7 +136,7 @@ function calculteResult(data) {
     return acc + curr.cinputPrice * 1;
   }, 0);
 
-  const perPerson = totalVal / 4;
+  const perPerson = totalVal / 3;
 
   return { adarshVal, manavVal, perPerson, vikasVal, totalVal };
 }
