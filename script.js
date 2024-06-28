@@ -26,7 +26,7 @@ const addButtonEl = document.getElementById("addButton");
 
 const total = document.getElementById("total");
 const adarsh = document.getElementById("adarsh");
-// const ankit = document.getElementById("ankit")
+// const rupesh = document.getElementById("rupesh")
 
 const vikas = document.getElementById("vikas");
 const manav = document.getElementById("manav");
@@ -99,7 +99,7 @@ function UpdateResult(values) {
   console.log(values);
   total.textContent = values.totalVal;
   adarsh.textContent = values.adarshVal;
-  // ankit.textContent = values.ankitVal;
+  rupesh.textContent = values.rupeshVal;
   vikas.textContent = values.vikasVal;
   manav.textContent = values.manavVal;
   perPerson.textContent = values.perPerson;
@@ -116,11 +116,11 @@ function calculteResult(data) {
     .reduce((acc, curr) => {
       return acc + curr.cinputPrice * 1;
     }, 0);
-  // const ankitVal = data
-  //   .filter((item) => item.ainputName.trim().toLowerCase() == "ankit")
-  //   .reduce((acc, curr) => {
-  //     return acc + curr.cinputPrice * 1;
-  //   }, 0);
+  const rupeshVal = data
+    .filter((item) => item.ainputName.trim().toLowerCase() == "rupesh")
+    .reduce((acc, curr) => {
+      return acc + curr.cinputPrice * 1;
+    }, 0);
   const vikasVal = data
     .filter((item) => item.ainputName.trim().toLowerCase() == "vikas")
     .reduce((acc, curr) => {
@@ -129,14 +129,26 @@ function calculteResult(data) {
 
   //   console.log({ resultManav });
   //   console.log({ resultVikas });
-  //   console.log({ resultAnkit });
+  //   console.log({ resultRupesh });
   //   console.log({ resultAdarsh });
 
   const totalVal = data.reduce((acc, curr) => {
     return acc + curr.cinputPrice * 1;
   }, 0);
 
-  const perPerson = totalVal / 3;
+  const perPerson = totalVal / 4;
 
-  return { adarshVal, manavVal, perPerson, vikasVal, totalVal };
+  return { adarshVal, manavVal, rupeshVal,perPerson, vikasVal, totalVal };
+}
+
+
+const warningMessage = document.querySelector('.warning');
+
+const date = new Date()
+
+if(date.getDate() < 5 ){
+    warningMessage.classList.add("show");
+  }else{
+  warningMessage.classList.add("hide");
+
 }
