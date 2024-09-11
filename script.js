@@ -25,7 +25,7 @@ const ItemTiles = document.getElementById("itemTiles");
 const addButtonEl = document.getElementById("addButton");
 
 const total = document.getElementById("total");
-const adarsh = document.getElementById("adarsh");
+const swaraj = document.getElementById("swaraj");
 // const rupesh = document.getElementById("rupesh")
 
 const vikas = document.getElementById("vikas");
@@ -98,7 +98,7 @@ function ItemListUpdate(name, item, price) {
 function UpdateResult(values) {
   console.log(values);
   total.textContent = values.totalVal;
-  adarsh.textContent = values.adarshVal;
+  swaraj.textContent = values.swarajVal;
   rupesh.textContent = values.rupeshVal;
   vikas.textContent = values.vikasVal;
   manav.textContent = values.manavVal;
@@ -111,8 +111,8 @@ function calculteResult(data) {
     .reduce((acc, curr) => {
       return acc + curr.cinputPrice * 1;
     }, 0);
-  const adarshVal = data
-    .filter((item) => item.ainputName.trim().toLowerCase() == "adarsh")
+  const swarajVal = data
+    .filter((item) => item.ainputName.trim().toLowerCase() == "swaraj")
     .reduce((acc, curr) => {
       return acc + curr.cinputPrice * 1;
     }, 0);
@@ -130,7 +130,7 @@ function calculteResult(data) {
   //   console.log({ resultManav });
   //   console.log({ resultVikas });
   //   console.log({ resultRupesh });
-  //   console.log({ resultAdarsh });
+  //   console.log({ resultswaraj });
 
   const totalVal = data.reduce((acc, curr) => {
     return acc + curr.cinputPrice * 1;
@@ -138,7 +138,7 @@ function calculteResult(data) {
 
   const perPerson = totalVal / 4;
 
-  return { adarshVal, manavVal, rupeshVal,perPerson, vikasVal, totalVal };
+  return { swarajVal, manavVal, rupeshVal,perPerson, vikasVal, totalVal };
 }
 
 
