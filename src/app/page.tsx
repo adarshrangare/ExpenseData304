@@ -2,7 +2,9 @@
 export default function Home() {
   return (
     <>
-    App is Under Process
+    <main>
+      App is Under Process
+    </main>
     </>
   );
 }
