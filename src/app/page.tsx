@@ -1,4 +1,6 @@
+'use client'
 import FormArea from "@/components/FormArea";
+import Main from "@/components/main";
 
 export default function Home() {
   return (
@@ -8,7 +10,9 @@ export default function Home() {
         <h1 className="text-center text-2xl ">Expense App</h1>
         <p className="text-center text-2xl ">304</p>
 
-        <FormArea/>
+        {/* <FormArea/> */}
+
+        <Main/>
 
       </div>
     </main>
