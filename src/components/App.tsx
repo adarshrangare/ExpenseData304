@@ -33,10 +33,12 @@ interface Totals {
   total: number;
   swaraj: number;
   manav: number;
-  rupesh: number;
+  //   rupesh: number;
   vikas: number;
   perPerson: number;
 }
+
+const NUMBER_OF_MEMBERS = 3;
 
 const firebaseConfig = {
   databaseURL:
@@ -57,7 +59,7 @@ export default function ExpenseTracker(): JSX.Element {
     total: 0,
     swaraj: 0,
     manav: 0,
-    rupesh: 0,
+    // rupesh: 0,
     vikas: 0,
     perPerson: 0,
   });
@@ -92,9 +94,9 @@ export default function ExpenseTracker(): JSX.Element {
           case "manav":
             acc.manav += price;
             break;
-          case "rupesh":
-            acc.rupesh += price;
-            break;
+          //   case "rupesh":
+          //     acc.rupesh += price;
+          //     break;
           case "vikas":
             acc.vikas += price;
             break;
@@ -105,12 +107,12 @@ export default function ExpenseTracker(): JSX.Element {
         total: 0,
         swaraj: 0,
         manav: 0,
-        rupesh: 0,
+        // rupesh: 0,
         vikas: 0,
       }
     );
 
-    totals.perPerson = totals.total / 4;
+    totals.perPerson = totals.total / NUMBER_OF_MEMBERS;
     setTotals(totals as Totals);
   };
 
@@ -133,12 +135,12 @@ export default function ExpenseTracker(): JSX.Element {
       setPrice("");
       setError("");
     } catch (err) {
-      setError("Failed to add item");
+      setError(JSON.stringify(err) || "Failed to add item");
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-zinc-900 via-zinc-800 to-zinc-900 text-white p-6">
+    <div className="min-h-screen bg-gradient-to-b from-slate-600 via-slate-800 to-slate-900 text-white p-6">
       <div className="max-w-4xl mx-auto space-y-8">
         {/* Header with animated gradient */}
         <div className="text-center space-y-4 relative overflow-hidden rounded-xl p-8 bg-gradient-to-r from-orange-600 to-pink-600">
@@ -211,7 +213,7 @@ export default function ExpenseTracker(): JSX.Element {
         {/* Add Expense Form */}
         <Card className="bg-black/40 backdrop-blur-xl border-white/10 hover:border-white/20 transition-all">
           <CardHeader>
-            <CardTitle className="flex items-center space-x-2">
+            <CardTitle className="text-slate-50 flex items-center space-x-2">
               <CreditCard className="w-6 h-6" />
               <span>Add New Expense</span>
             </CardTitle>
@@ -221,7 +223,7 @@ export default function ExpenseTracker(): JSX.Element {
               <SelectTrigger className="bg-white/5 border-white/10 focus:ring-orange-500">
                 <SelectValue placeholder="Select Name" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-slate-800/50 backdrop-blur-sm">
                 <SelectItem value="Manav">Manav</SelectItem>
                 <SelectItem value="Rupesh">Rupesh</SelectItem>
                 <SelectItem value="Swaraj">Swaraj</SelectItem>
