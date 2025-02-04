@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
@@ -13,21 +13,24 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+export const viewport: Viewport = {
+  themeColor: "black",
+  minimumScale: 1,
+  initialScale: 1,
+  width: "device-width",
+  
+};
+
 export const metadata: Metadata = {
   title: "Expense Tracker 304",
   description: "Created by Adarsh",
   manifest: "/manifest.json",
-  themeColor: "#000000",
-  viewport:
-    "minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover",
   icons: {
     icon: [
       { url: "/android-chrome-192x192.png", sizes: "192x192" },
       { url: "/android-chrome-512x512.png", sizes: "512x512" },
     ],
-    apple: [
-      { url: "/apple-touch-icon.png" },
-    ],
+    apple: [{ url: "/apple-touch-icon.png" }],
     shortcut: [{ url: "/android-chrome-192x192.png" }],
   },
   appleWebApp: {

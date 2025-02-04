@@ -91,7 +91,7 @@ export default function ExpenseTracker(): JSX.Element {
 
   const calculateTotals = (data: ExpenseItem[]): void => {
     const totals = data.reduce(
-      (acc: Omit<Totals, "perPerson">, curr: ExpenseItem) => {
+      (acc: Totals, curr: ExpenseItem) => {
         const price = Number(curr.cinputPrice);
         acc.total += price;
 
@@ -117,6 +117,7 @@ export default function ExpenseTracker(): JSX.Element {
         manav: 0,
         // rupesh: 0,
         vikas: 0,
+        perPerson: 0,
       }
     );
 
@@ -214,7 +215,9 @@ export default function ExpenseTracker(): JSX.Element {
               </div>
               <div>
                 <p className="text-sm text-orange-400 ">Members</p>
-                <p className="text-2xl font-bold text-orange-400 ">{NUMBER_OF_MEMBERS}</p>
+                <p className="text-2xl font-bold text-orange-400 ">
+                  {NUMBER_OF_MEMBERS}
+                </p>
               </div>
             </CardContent>
           </Card>
