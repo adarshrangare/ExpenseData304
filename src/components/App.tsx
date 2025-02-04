@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/select";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { CreditCard, TrendingUp, Users, Wallet } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 
 interface ExpenseItem {
   ainputName: string;
@@ -76,8 +77,15 @@ export default function ExpenseTracker(): JSX.Element {
 
     // Show warning for first 5 days of month
     const date = new Date();
-    if (date.getDate() < 5) {
+    if (date.getDate() < 6) {
+      //   setError("Please Clear your Dues with everyone");
+      //   console.log(date.getDate());
       setError("Please Clear your Dues with everyone");
+      toast({
+        title: "Please Clear your Dues with everyone",
+        description:
+          "Data will be deleted automatically after 5th of every month",
+      });
     }
   }, []);
 
