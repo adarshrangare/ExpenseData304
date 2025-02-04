@@ -220,10 +220,13 @@ export default function ExpenseTracker(): JSX.Element {
           </CardHeader>
           <CardContent className="space-y-4">
             <Select onValueChange={setName} value={name}>
-              <SelectTrigger className="bg-white/5 border-white/10 focus:ring-orange-500">
-                <SelectValue placeholder="Select Name" />
+              <SelectTrigger className="bg-white/5  text-slate-50 border-white/10 focus:ring-orange-500">
+                <SelectValue
+                  className="text-slate-50"
+                  placeholder="Select Name"
+                />
               </SelectTrigger>
-              <SelectContent className="bg-slate-800/50 backdrop-blur-sm">
+              <SelectContent className="bg-slate-800/50 backdrop-blur-sm text-slate-50">
                 <SelectItem value="Manav">Manav</SelectItem>
                 <SelectItem value="Rupesh">Rupesh</SelectItem>
                 <SelectItem value="Swaraj">Swaraj</SelectItem>
@@ -235,7 +238,7 @@ export default function ExpenseTracker(): JSX.Element {
               placeholder="Item Name"
               value={item}
               onChange={(e) => setItem(e.target.value)}
-              className="bg-white/5 border-white/10 focus:ring-orange-500"
+              className="text-slate-50 bg-white/5 border-white/10 focus:ring-orange-500"
             />
 
             <Input
@@ -243,7 +246,7 @@ export default function ExpenseTracker(): JSX.Element {
               placeholder="Price"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
-              className="bg-white/5 border-white/10 focus:ring-orange-500"
+              className="text-slate-50 bg-white/5 border-white/10 focus:ring-orange-500"
             />
 
             <Button
@@ -256,7 +259,7 @@ export default function ExpenseTracker(): JSX.Element {
         </Card>
 
         {/* Recent Expenses */}
-        <Card className="bg-black/40 backdrop-blur-xl border-white/10">
+        <Card className="text-slate-50 bg-black/40 backdrop-blur-xl border-white/10">
           <CardHeader>
             <CardTitle>Recent Expenses</CardTitle>
           </CardHeader>
@@ -272,16 +275,18 @@ export default function ExpenseTracker(): JSX.Element {
                       className={`w-2 h-2 rounded-full ${
                         item.ainputName.toLowerCase() === "manav"
                           ? "bg-blue-500"
-                          : item.ainputName.toLowerCase() === "rupesh"
-                          ? "bg-green-500"
-                          : item.ainputName.toLowerCase() === "swaraj"
+                          : //   : item.ainputName.toLowerCase() === "rupesh"
+                          //   ? "bg-green-500"
+                          item.ainputName.toLowerCase() === "swaraj"
                           ? "bg-purple-500"
                           : "bg-orange-500"
                       }`}
                     />
                     <span className="font-medium">{item.ainputName}</span>
                   </div>
-                  <span className="text-gray-400">{item.binputItem}</span>
+                  <span className="text-neutral-300 truncate">
+                    {item.binputItem}
+                  </span>
                   <span className="font-bold">₹{item.cinputPrice}</span>
                 </div>
               ))}
@@ -298,7 +303,7 @@ export default function ExpenseTracker(): JSX.Element {
             <div className="space-y-3">
               <div className="flex justify-between items-center bg-gradient-to-r from-blue-500/20 to-blue-600/20 p-4 rounded-lg">
                 <span className="font-bold text-blue-400">Total</span>
-                <span className="text-xl">₹{totals.total}</span>
+                <span className="text-xl text-slate-50">₹{totals.total}</span>
               </div>
 
               {[
@@ -314,12 +319,12 @@ export default function ExpenseTracker(): JSX.Element {
                   color: "from-blue-500/20 to-blue-600/20",
                   text: "text-blue-400",
                 },
-                {
-                  name: "Rupesh",
-                  amount: totals.rupesh,
-                  color: "from-green-500/20 to-green-600/20",
-                  text: "text-green-400",
-                },
+                // {
+                //   name: "Rupesh",
+                //   amount: totals.rupesh,
+                //   color: "from-green-500/20 to-green-600/20",
+                //   text: "text-green-400",
+                // },
                 {
                   name: "Vikas",
                   amount: totals.vikas,
@@ -332,13 +337,15 @@ export default function ExpenseTracker(): JSX.Element {
                   className={`flex justify-between items-center bg-gradient-to-r ${person.color} p-4 rounded-lg`}
                 >
                   <span className={person.text}>{person.name}</span>
-                  <span>₹{person.amount}</span>
+                  <span className="text-slate-50">₹{person.amount}</span>
                 </div>
               ))}
 
               <div className="flex justify-between items-center bg-gradient-to-r from-pink-500/20 to-orange-500/20 p-4 rounded-lg">
                 <span className="font-bold text-orange-400">Per Person</span>
-                <span className="text-xl">₹{totals.perPerson.toFixed(2)}</span>
+                <span className="text-xl text-slate-50">
+                  ₹{totals.perPerson.toFixed(2)}
+                </span>
               </div>
             </div>
           </CardContent>
