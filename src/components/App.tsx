@@ -236,7 +236,7 @@ export default function ExpenseTracker(): JSX.Element {
               </SelectTrigger>
               <SelectContent className="bg-slate-800/50 backdrop-blur-sm text-slate-50">
                 <SelectItem value="Manav">Manav</SelectItem>
-                <SelectItem value="Rupesh">Rupesh</SelectItem>
+                {/* <SelectItem value="Rupesh">Rupesh</SelectItem> */}
                 <SelectItem value="Swaraj">Swaraj</SelectItem>
                 <SelectItem value="Vikas">Vikas</SelectItem>
               </SelectContent>
