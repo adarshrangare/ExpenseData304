@@ -77,7 +77,7 @@ export default function ExpenseTracker(): JSX.Element {
 
     // Show warning for first 5 days of month
     const date = new Date();
-    if (date.getDate() < 6) {
+    if (date.getDate() <= 5) {
       //   setError("Please Clear your Dues with everyone");
       //   console.log(date.getDate());
       setError("Please Clear your Dues with everyone");
@@ -172,7 +172,9 @@ export default function ExpenseTracker(): JSX.Element {
               </div>
               <div>
                 <p className="text-sm text-blue-400">Total Expenses</p>
-                <p className="text-2xl font-bold">₹{totals.total}</p>
+                <p className="text-2xl font-bold text-blue-400 ">
+                  ₹{totals.total}
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -184,7 +186,7 @@ export default function ExpenseTracker(): JSX.Element {
               </div>
               <div>
                 <p className="text-sm text-green-400">Per Person</p>
-                <p className="text-2xl font-bold">
+                <p className="text-2xl font-bold text-green-400 ">
                   ₹{totals.perPerson.toFixed(2)}
                 </p>
               </div>
@@ -198,7 +200,7 @@ export default function ExpenseTracker(): JSX.Element {
               </div>
               <div>
                 <p className="text-sm text-purple-400">Recent Expense</p>
-                <p className="text-2xl font-bold">
+                <p className="text-2xl font-bold text-purple-400 ">
                   ₹{items[0]?.cinputPrice || 0}
                 </p>
               </div>
@@ -211,8 +213,8 @@ export default function ExpenseTracker(): JSX.Element {
                 <Users className="w-6 h-6 text-orange-400" />
               </div>
               <div>
-                <p className="text-sm text-orange-400">Members</p>
-                <p className="text-2xl font-bold">4</p>
+                <p className="text-sm text-orange-400 ">Members</p>
+                <p className="text-2xl font-bold text-orange-400 ">{NUMBER_OF_MEMBERS}</p>
               </div>
             </CardContent>
           </Card>
