@@ -21,13 +21,18 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { CreditCard, TrendingUp, Users, Wallet } from "lucide-react";
+import { CalendarIcon, CreditCard, TrendingUp, Users, Wallet } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { cn } from "@/lib/utils";
+import { Calendar } from "./ui/calendar";
+import { format } from "date-fns";
 
 interface ExpenseItem {
   ainputName: string;
   binputItem: string;
   cinputPrice: string;
+  date?:number | Date;
 }
 
 interface Totals {
@@ -65,12 +70,20 @@ export default function ExpenseTracker(): JSX.Element {
     perPerson: 0,
   });
 
+  const [date, setDate] = useState<Date | undefined>(new Date())
+
   useEffect(() => {
     const itemListInDB = ref(database, "itemList");
     onValue(itemListInDB, (snapshot: DataSnapshot) => {
       if (snapshot.val()) {
         const data = Object.values(snapshot.val()) as ExpenseItem[];
-        setItems(data);
+
+        const formattedData = data.map((item) => ({
+          ...item,
+          date: item.date ? new Date(item.date) : undefined, 
+        }));
+
+        setItems(formattedData);
         calculateTotals(data);
       }
     });
@@ -78,13 +91,12 @@ export default function ExpenseTracker(): JSX.Element {
     // Show warning for first 5 days of month
     const date = new Date();
     if (date.getDate() <= 5) {
-      //   setError("Please Clear your Dues with everyone");
-      //   console.log(date.getDate());
       setError("Please Clear your Dues with everyone");
       toast({
         title: "Please Clear your Dues with everyone",
         description:
           "Data will be deleted automatically after 5th of every month",
+        className:"bg-red-200/80 text-red-500 font-normal border-red-800 py-2"
       });
     }
   }, []);
@@ -124,10 +136,14 @@ export default function ExpenseTracker(): JSX.Element {
     totals.perPerson = totals.total / NUMBER_OF_MEMBERS;
     setTotals(totals as Totals);
   };
-
   const handleSubmit = async (): Promise<void> => {
     if (!name || !item || !price) {
       setError("Please fill all fields");
+      toast({
+        title:"Please fill all fields",
+        // style:{background:"#1932de", color:"white"},
+        className:"bg-red-200/80 text-red-500 font-normal border-red-800 py-2"
+      })
       return;
     }
 
@@ -135,6 +151,7 @@ export default function ExpenseTracker(): JSX.Element {
       ainputName: name,
       binputItem: item,
       cinputPrice: price,
+      date: date ? new Date(date).getTime() : Date.now(),
     };
 
     try {
@@ -143,19 +160,20 @@ export default function ExpenseTracker(): JSX.Element {
       setItem("");
       setPrice("");
       setError("");
+      setDate(new Date())
     } catch (err) {
       setError(JSON.stringify(err) || "Failed to add item");
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-600 via-slate-800 to-slate-900 text-white p-6">
-      <div className="max-w-4xl mx-auto space-y-8">
+    <div className="min-h-screen bg-gradient-to-b from-slate-600 via-slate-800 to-slate-900 text-white p-6 max-md:p-4">
+      <div className="max-w-4xl mx-auto space-y-8 max-md:space-y-6">
         {/* Header with animated gradient */}
-        <div className="text-center space-y-4 relative overflow-hidden rounded-xl p-8 bg-gradient-to-r from-orange-600 to-pink-600">
-          <div className="absolute inset-0 bg-gradient-to-r from-orange-600/30 to-pink-600/30 animate-pulse"></div>
-          <h1 className="text-4xl font-bold relative z-10">Expense Data</h1>
-          <h2 className="text-xl opacity-90 relative z-10">Flat 304</h2>
+        <div className="text-center space-y-4 max-md:space-y-2 relative overflow-hidden rounded-xl p-8 max-md:p-4 bg-gradient-to-br from-orange-600 to-pink-600">
+          {/* <div className="absolute inset-0 bg-gradient-to-r from-orange-600/30 to-pink-600/30 animate-pulse"></div> */}
+          <h1 className="text-4xl max-md:text-2xl font-bold relative z-10">Flat 304</h1>
+          <h2 className="text-xl  max-md:text-lg opacity-90 relative z-10">Expense list</h2>
         </div>
 
         {error && (
@@ -165,7 +183,7 @@ export default function ExpenseTracker(): JSX.Element {
         )}
 
         {/* Stats Overview */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="max-md:hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <Card className="bg-gradient-to-br from-blue-500/10 to-blue-600/10 border-blue-500/20 hover:border-blue-500/40 transition-all">
             <CardContent className="p-6 flex items-center space-x-4">
               <div className="p-3 bg-blue-500/20 rounded-full">
@@ -262,6 +280,29 @@ export default function ExpenseTracker(): JSX.Element {
               className="text-slate-50 bg-white/5 border-white/10 focus:ring-orange-500"
             />
 
+<Popover>
+      <PopoverTrigger className="w-full" asChild>
+        <Button
+          variant={"outline"}
+          className={cn(
+            "bg-white/5 hover:bg-white/5  text-left  hover:text-slate-50 text-slate-50 border-white/10 focus:ring-orange-500 ",
+            !date && "text-muted-foreground"
+          )}
+        >
+          <CalendarIcon className="mr-2 h-4 w-4" />
+          {date ? format(date,"PPP") : <span className="text-left">Pick a date</span>}
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-auto p-0">
+        <Calendar
+          mode="single"
+          selected={new Date()}
+          onSelect={setDate}
+          initialFocus
+        />
+      </PopoverContent>
+    </Popover>
+
             <Button
               className="w-full bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 transition-all duration-300"
               onClick={handleSubmit}
@@ -279,36 +320,41 @@ export default function ExpenseTracker(): JSX.Element {
           <CardContent>
             <div className="space-y-2">
               {items.map((item, index) => (
-                <div
-                  key={index}
-                  className="flex justify-between items-center bg-white/5 p-4 rounded-lg hover:bg-white/10 transition-all"
-                >
-                  <div className="flex items-center space-x-4">
-                    <div
-                      className={`w-2 h-2 rounded-full ${
-                        item.ainputName.toLowerCase() === "manav"
-                          ? "bg-blue-500"
-                          : //   : item.ainputName.toLowerCase() === "rupesh"
-                          //   ? "bg-green-500"
-                          item.ainputName.toLowerCase() === "swaraj"
-                          ? "bg-purple-500"
-                          : "bg-orange-500"
-                      }`}
-                    />
-                    <span className="font-medium">{item.ainputName}</span>
+                <div>
+                  <span className="text-neutral-300 text-xs truncate"> {item.date ? format(new Date(item.date), "PPP") : ""}</span>
+                  <div
+                    key={index}
+                    className="flex justify-between items-center bg-white/5 p-4 rounded-lg hover:bg-white/10 transition-all"
+                  >
+                  
+                    <div className="flex items-center space-x-4">
+                      <div
+                        className={`w-2 h-2 rounded-full ${
+                          item.ainputName.toLowerCase() === "manav"
+                            ? "bg-blue-500"
+                            : //   : item.ainputName.toLowerCase() === "rupesh"
+                            //   ? "bg-green-500"
+                            item.ainputName.toLowerCase() === "swaraj"
+                            ? "bg-purple-500"
+                            : "bg-orange-500"
+                        }`}
+                      />
+                      <span className="font-medium">{item.ainputName}</span>
+                    </div>
+                    <span className="text-neutral-300 truncate">
+                      {item.binputItem}
+                    </span>
+                    <span className="font-bold">₹{item.cinputPrice}</span>
+                  
                   </div>
-                  <span className="text-neutral-300 truncate">
-                    {item.binputItem}
-                  </span>
-                  <span className="font-bold">₹{item.cinputPrice}</span>
-                </div>
-              ))}
-            </div>
+                                </div>
+                                ))}
+                              </div>
           </CardContent>
         </Card>
 
         {/* Summary */}
-        <Card className="bg-black/40 backdrop-blur-xl border-white/10">
+        <Card className="text-slate-50 bg-black/40 backdrop-blur-xl border-white/10">
           <CardHeader>
             <CardTitle>Summary</CardTitle>
           </CardHeader>
