@@ -320,10 +320,9 @@ export default function ExpenseTracker(): JSX.Element {
           <CardContent>
             <div className="space-y-2">
               {items.map((item, index) => (
-                <div>
+                <div key={index}>
                   <span className="text-neutral-300 text-xs truncate"> {item.date ? format(new Date(item.date), "PPP") : ""}</span>
                   <div
-                    key={index}
                     className="flex justify-between items-center bg-white/5 p-4 rounded-lg hover:bg-white/10 transition-all"
                   >
                   
