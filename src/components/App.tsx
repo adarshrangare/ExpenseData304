@@ -33,8 +33,10 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { cn } from "@/lib/utils";
 import { Calendar } from "./ui/calendar";
 import { format } from "date-fns";
+import { FlickeringGrid } from "./magicui/flickering-grid";
 
 interface ExpenseItem {
+  id: string;
   ainputName: string;
   binputItem: string;
   cinputPrice: string;
@@ -82,17 +84,22 @@ export default function ExpenseTracker(): JSX.Element {
 
   useEffect(() => {
     const itemListInDB = ref(database, "itemList");
+
+    console.log("itemListInDB", itemListInDB);
+
     onValue(itemListInDB, (snapshot: DataSnapshot) => {
       if (snapshot.val()) {
-        const data = Object.values(snapshot.val()) as ExpenseItem[];
+        const dbData = snapshot.val();
+        const data = Object.keys(dbData);
 
-        const formattedData = data.map((item) => ({
-          ...item,
-          date: item.date ? new Date(item.date) : undefined,
+        const formattedData = data.map((key) => ({
+          id: key,
+          ...dbData[key],
+          date: dbData[key].date ? new Date(dbData[key].date) : undefined,
         }));
 
         setItems(formattedData);
-        calculateTotals(data);
+        calculateTotals(formattedData);
       }
     });
 
@@ -155,7 +162,7 @@ export default function ExpenseTracker(): JSX.Element {
       return;
     }
 
-    const newItem: ExpenseItem = {
+    const newItem: Omit<ExpenseItem, "id"> = {
       ainputName: name,
       binputItem: item,
       cinputPrice: price,
@@ -175,7 +182,17 @@ export default function ExpenseTracker(): JSX.Element {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-600 via-slate-800 to-slate-900 text-white p-6 max-md:p-4">
+    <div className="min-h-screen relative bg-gradient-to-b from-black/80 via-slate-800 to-slate-900 text-white p-6 max-md:p-4">
+      <FlickeringGrid
+        className="fixed inset-0 z-0 [mask-image:radial-gradient(450px_circle_at_center,white,transparent)]"
+        squareSize={4}
+        gridGap={6}
+        color="#60A5FA"
+        maxOpacity={0.5}
+        flickerChance={0.1}
+        height={1000}
+        width={400}
+      />
       <div className="max-w-4xl mx-auto space-y-8 max-md:space-y-6">
         {/* Header with animated gradient */}
         <div className="text-center space-y-4 max-md:space-y-2 relative overflow-hidden rounded-xl p-8 max-md:p-4 bg-gradient-to-br from-orange-600 to-pink-600">
@@ -338,8 +355,8 @@ export default function ExpenseTracker(): JSX.Element {
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
-              {items.map((item, index) => (
-                <div key={index}>
+              {items.map((item) => (
+                <div key={item.id}>
                   <span className="text-neutral-300 text-xs truncate">
                     {" "}
                     {item.date ? format(new Date(item.date), "PPP") : ""}
