@@ -358,7 +358,6 @@ export default function ExpenseTracker(): JSX.Element {
               {items.map((item) => (
                 <div key={item.id}>
                   <span className="text-neutral-300 text-xs truncate">
-                    {" "}
                     {item.date ? format(new Date(item.date), "PPP") : ""}
                   </span>
                   <div className="flex justify-between items-center bg-white/5 p-4 rounded-lg hover:bg-white/10 transition-all">
