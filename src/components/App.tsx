@@ -352,12 +352,12 @@ export default function ExpenseTracker(): JSX.Element {
         </Card>
 
         {/* Recent Expenses */}
-        <Card className="text-slate-50 max-h-dvh overflow-y-auto bg-black/30 backdrop-blur-sm border-white/10">
+        <Card className="relative text-slate-50   bg-black/30 backdrop-blur-sm border-white/10">
           <CardHeader>
             <CardTitle>Recent Expenses</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-2">
+            <div className="space-y-2 max-h-dvh overflow-y-auto">
               {items.map((item) => (
                 <div key={item.id}>
                   <span className="text-neutral-300 text-xs truncate">
