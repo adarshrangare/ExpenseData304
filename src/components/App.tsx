@@ -352,7 +352,7 @@ export default function ExpenseTracker(): JSX.Element {
         </Card>
 
         {/* Recent Expenses */}
-        <Card className="text-slate-50 bg-black/30 backdrop-blur-sm border-white/10">
+        <Card className="text-slate-50 max-h-dvh overflow-y-auto bg-black/30 backdrop-blur-sm border-white/10">
           <CardHeader>
             <CardTitle>Recent Expenses</CardTitle>
           </CardHeader>
