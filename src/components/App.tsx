@@ -398,7 +398,9 @@ export default function ExpenseTracker(): JSX.Element {
             <div className="space-y-3">
               <div className="flex justify-between items-center bg-gradient-to-r from-blue-500/20 to-blue-600/20 p-4 rounded-lg">
                 <span className="font-bold text-blue-400">Total</span>
-                <span className="text-xl text-slate-50">₹{totals.total}</span>
+                <span className="text-xl text-slate-50 font-semibold">
+                  ₹{totals.total}
+                </span>
               </div>
 
               {[
@@ -438,7 +440,7 @@ export default function ExpenseTracker(): JSX.Element {
 
               <div className="flex justify-between items-center bg-gradient-to-r from-pink-500/20 to-orange-500/20 p-4 rounded-lg">
                 <span className="font-bold text-orange-400">Per Person</span>
-                <span className="text-xl text-slate-50">
+                <span className="text-xl text-slate-50 ">
                   ₹{totals.perPerson.toFixed(2)}
                 </span>
               </div>
