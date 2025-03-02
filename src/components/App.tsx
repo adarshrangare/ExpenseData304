@@ -343,7 +343,7 @@ export default function ExpenseTracker(): JSX.Element {
             </Popover>
 
             <Button
-              className="w-full bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 transition-all duration-300"
+              className="w-full py-6 bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 active:scale-95 duration-200 transition-all "
               onClick={handleSubmit}
             >
               Add Item
