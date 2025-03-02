@@ -274,7 +274,7 @@ export default function ExpenseTracker(): JSX.Element {
         </div>
 
         {/* Add Expense Form */}
-        <Card className="bg-black/40 backdrop-blur-xl border-white/10 hover:border-white/20 transition-all">
+        <Card className="bg-black/30 backdrop-blur-sm border-white/10 hover:border-white/20 transition-all">
           <CardHeader>
             <CardTitle className="text-slate-50 flex items-center space-x-2">
               <CreditCard className="w-6 h-6" />
@@ -352,7 +352,7 @@ export default function ExpenseTracker(): JSX.Element {
         </Card>
 
         {/* Recent Expenses */}
-        <Card className="text-slate-50 bg-black/40 backdrop-blur-xl border-white/10">
+        <Card className="text-slate-50 bg-black/30 backdrop-blur-sm border-white/10">
           <CardHeader>
             <CardTitle>Recent Expenses</CardTitle>
           </CardHeader>
@@ -390,7 +390,7 @@ export default function ExpenseTracker(): JSX.Element {
         </Card>
 
         {/* Summary */}
-        <Card className="text-slate-50 bg-black/40 backdrop-blur-xl border-white/10">
+        <Card className="text-slate-50 bg-black/30 backdrop-blur-sm border-white/10">
           <CardHeader>
             <CardTitle>Summary</CardTitle>
           </CardHeader>
