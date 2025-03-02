@@ -85,8 +85,6 @@ export default function ExpenseTracker(): JSX.Element {
   useEffect(() => {
     const itemListInDB = ref(database, "itemList");
 
-    console.log("itemListInDB", itemListInDB);
-
     onValue(itemListInDB, (snapshot: DataSnapshot) => {
       if (snapshot.val()) {
         const dbData = snapshot.val();
@@ -157,7 +155,7 @@ export default function ExpenseTracker(): JSX.Element {
       toast({
         title: "Please fill all fields",
         // style:{background:"#1932de", color:"white"},
-        className: "bg-red-200/80 text-red-500 font-normal border-red-800 py-2",
+        className: "bg-red-100 text-red-500 font-normal border-red-800 py-2",
       });
       return;
     }
@@ -176,6 +174,11 @@ export default function ExpenseTracker(): JSX.Element {
       setPrice("");
       setError("");
       setDate(new Date());
+      toast({
+        title: "Item added successfully",
+        className:
+          "bg-green-100 text-green-500 font-normal border-green-800 py-2",
+      });
     } catch (err) {
       setError(JSON.stringify(err) || "Failed to add item");
     }
@@ -183,17 +186,17 @@ export default function ExpenseTracker(): JSX.Element {
 
   return (
     <div className="min-h-screen relative bg-gradient-to-b from-black/80 via-slate-800 to-slate-900 text-white p-6 max-md:p-4">
-      <FlickeringGrid
-        className="fixed inset-0 z-0 [mask-image:radial-gradient(450px_circle_at_center,white,transparent)]"
-        squareSize={4}
-        gridGap={6}
-        color="#60A5FA"
-        maxOpacity={0.5}
-        flickerChance={0.1}
-        height={1000}
-        width={400}
-      />
-      <div className="max-w-4xl mx-auto space-y-8 max-md:space-y-6">
+      <div className="max-w-4xl relative mx-auto space-y-8 max-md:space-y-6 ">
+        <FlickeringGrid
+          className="fixed mx-auto inset-0 z-0 w-full [mask-image:radial-gradient(450px_circle_at_center,white,transparent)] "
+          squareSize={4}
+          gridGap={6}
+          color="#60A5FA"
+          maxOpacity={0.5}
+          flickerChance={0.1}
+          height={1000}
+          width={1600}
+        />
         {/* Header with animated gradient */}
         <div className="text-center space-y-4 max-md:space-y-2 relative overflow-hidden rounded-xl p-8 max-md:p-4 bg-gradient-to-br from-orange-600 to-pink-600">
           {/* <div className="absolute inset-0 bg-gradient-to-r from-orange-600/30 to-pink-600/30 animate-pulse"></div> */}
@@ -206,7 +209,7 @@ export default function ExpenseTracker(): JSX.Element {
         </div>
 
         {error && (
-          <Alert variant="destructive" className="animate-shake">
+          <Alert variant="destructive" className="animate-bounce">
             <AlertDescription>{error}</AlertDescription>
           </Alert>
         )}
